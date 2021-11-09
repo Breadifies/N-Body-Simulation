@@ -1,1 +1,35 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas>
+    </canvas>
+    <button class="paramBtn" id="clearBtn">Clear Simulation</button>
+    <button class="paramBtn" id="timeBtn">Time Dilation</button> 
+    <button class="paramBtn" id="physicsBtn">Physics</button> 
+    <button onclick="showBtn()"class="paramBtn" id="objectTopBtn">ObjectTop</button> 
+    <button class="paramBtn" id="objectBotBtn">ObjectBottom</button> 
+    <button class="objType" id="planetBtn">PlanetBdy</button>
+    <button class="objType" id="sunBtn">SolarBdy</button>
+    <button class="objType" id="temp1Btn">temp1</button>
+    <button class="objType" id="temp2Btn">temp2</button>
+    <button class="objType" id="temp3Btn">temp3</button>
+    <button class="zoom" id="zoomOutBtn">+</button>
+    <button class="zoom" id="zoomInBtn">-</button>
+    <div id="objTypeLine"></div>
+    <div class="paramChildBtn" id="timeChild"></div>
+    <div class="paramChildBtn" id="physicsChild"></div>
+    <div class="paramChildBtn" id="objectTopChild"></div>
+    <div class="paaramChildBtn" id="objectBotChild"></div>
+   <script src="script.js"></script>
+   <script src="buttonEventHandling.js"></script>
+</body>
+</html>
