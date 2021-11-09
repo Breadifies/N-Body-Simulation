@@ -1,0 +1,107 @@
+canvas {
+    border: 1px solid black;
+    background: rgb(29, 41, 81);
+}
+
+body {
+    margin: 0; /*overrides preset borwser property so there is no margin for the container*/
+    overflow: hidden; /*prevents use of scrollbar*/
+}
+
+
+.paramBtn {
+    position: absolute; /*absolute positioning to allow objects inside canvas container*/
+    background: rgba(170, 209, 231, 0.212);
+    right: 10px;
+    width: 90px;
+    height: 80px;
+ 
+}
+
+#clearBtn {
+    top:600px;
+}
+#timeBtn {
+    top:500px;
+}
+#physicsBtn {
+    top:400px;
+}
+#objectBotBtn {
+    top:300px;
+}
+#objectTopBtn {
+    top:220px;
+}
+
+/*parameter child popups*/
+.paramChildBtn{
+    position: absolute;
+    background-color: rgba(44, 47, 51, 0.8);
+    display: none;
+    border: 5px solid rgb(26, 26, 163, 0.8);
+    border-radius: 5px;
+    right: 110px;
+    top: 200px;
+    height: 200px;
+    width: 210px;
+}
+
+#physicsChild {
+    height: 150px;
+    top: 400px;
+
+}
+
+/**/
+
+
+/*Line divider */
+#objTypeLine {
+    background: rgb(54, 136, 184, 0.6);
+    border-radius: 100px;
+    position: absolute;
+    height: 5px;
+    width: 550px;
+    right: 45px;
+    top: 80px;
+}
+
+.objType {
+    position: absolute;
+    background: rgba(90, 179, 179, 0.8);
+    border-radius: 15px;
+    width: 60px;
+    height: 50px;
+    top: 18px;
+}
+#planetBtn {
+    right: 500px;
+}
+#sunBtn {
+    right: 400px;
+}
+#temp1Btn {
+    right: 300px;
+}
+#temp2Btn {
+    right: 200px;
+}
+#temp3Btn {
+    right: 100px;
+}
+
+.zoom {
+    position: absolute;
+    background: rgba(125, 212, 169, 0.9);
+    border-radius: 18px;
+    left: 35px;
+    width: 50px;
+    height: 50px;
+}
+#zoomOutBtn {
+    top: 620px;
+}
+#zoomInBtn {
+    top: 675px;
+}
