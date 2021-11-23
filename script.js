@@ -1,4 +1,4 @@
-   const canvas = document.querySelector("canvas"); //c stands for context
+  const canvas = document.querySelector("canvas"); //c stands for context
 const c = canvas.getContext("2d");
 const width = (canvas.width = window.innerWidth);
 const height = (canvas.height = window.innerHeight);
@@ -23,7 +23,7 @@ let UGC = 35;
 const dt = 0.008; //measured in years
 const softeningConstant = 0.15;
 const scale = 70;
-const trailLimit = 45;
+const trailLimit = 10;
 const velocityDragMult = 35;
 
 
@@ -163,6 +163,12 @@ canvas.addEventListener("mousemove",
   false
 );
 
+//////////////MOUSE OBJECT VARIABLES
+//////////////
+
+let dragMass = 0.005;
+let dragSize = 5;
+
 canvas.addEventListener("mouseup",
   function(e) {
     const x = (mousePressX - width / 2) / scale;
@@ -171,7 +177,7 @@ canvas.addEventListener("mouseup",
     const vy = -(e.clientY - mousePressY) / velocityDragMult;
     //negative to simulate slingshot-like input feedback
 
-    nBodyInstance.cBodies.push({m: 0.005, x, y, vx, vy, cobject: new cObject(c, 2, "255, 255, 255")});
+    nBodyInstance.cBodies.push({m: dragMass, x, y, vx, vy, cobject: new cObject(c, dragSize, "255, 255, 255")});
     dragging = false;
   //placeholder cBody which pushes a pre determined object into the simulation at the mouse's position.
     },
@@ -207,4 +213,3 @@ canvas.addEventListener("mouseup",
   };
   
 animate();
-
