@@ -177,7 +177,7 @@ canvas.addEventListener("mouseup",
     const vy = -(e.clientY - mousePressY) / velocityDragMult;
     //negative to simulate slingshot-like input feedback
 
-    nBodyInstance.cBodies.push({m: dragMass, x, y, vx, vy, cobject: new cObject(c, dragSize, "255, 255, 255")});
+    nBodyInstance.cBodies.push({m: dragMass, x, y, vx, vy, cobject: new cObject(c, Math.random() * 5, "255, 255, 255")});
     dragging = false;
   //placeholder cBody which pushes a pre determined object into the simulation at the mouse's position.
     },
