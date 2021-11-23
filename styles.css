@@ -1,6 +1,6 @@
 canvas {
     border: 1px solid black;
-    background: rgb(29, 41, 81);
+    background: rgb(1, 2, 5);
 }
 
 body {
@@ -47,10 +47,22 @@ body {
     width: 210px;
 }
 
+#objectBotChild {
+    height: 170px;
+    top: 300px;
+
+}
+
+
 #physicsChild {
     height: 150px;
     top: 400px;
 
+}
+
+#timeChild {
+    height: 130px;
+    top: 500px;
 }
 
 /**/
