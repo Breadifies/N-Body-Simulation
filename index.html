@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,11 +12,18 @@
 <body>
     <canvas>
     </canvas>
-    <button class="paramBtn" id="clearBtn">Clear Simulation</button>
-    <button class="paramBtn" id="timeBtn">Time Dilation</button> 
-    <button onclick="showBtnPhysics()"class="paramBtn" id="physicsBtn">Physics</button> 
     <button class="paramBtn" id="objectTopBtn">ObjectTop</button> 
-    <button class="paramBtn" id="objectBotBtn">ObjectBottom</button> 
+
+    <button onclick="showBtnBotObj()" class="paramBtn" id="objectBotBtn">ObjectBottom</button> 
+
+    <button onclick="showBtnPhysics()"class="paramBtn" id="physicsBtn">Physics</button> 
+    
+    <button onclick="showBtnTime()" class="paramBtn" id="timeBtn">Time Dilation</button> 
+
+    <button onclick="clearSim()" class="paramBtn" id="clearBtn">Clear Simulation</button>
+
+
+
     <button class="objType" id="planetBtn">PlanetBdy</button>
     <button class="objType" id="sunBtn">SolarBdy</button>
     <button class="objType" id="temp1Btn">temp1</button>
@@ -24,25 +32,52 @@
     <button class="zoom" id="zoomOutBtn">+</button>
     <button class="zoom" id="zoomInBtn">-</button>
     <div id="objTypeLine"></div>
-    <div class="paramChildBtn" id="timeChild"></div>
+
+    <div class="paramChildBtn" id="objectTopChild"> </div>
+
+    <div class="paramChildBtn" id="objectBotChild">
+        <div>Object Customization</div>
+        <input type="number" min="1" max="1000" id="massChange" style="width: 100px">
+        <span> Mass </span>
+        <button id="updateMass">Update</button>
+        Where a value of 1 is equal to one Solar Mass
+        <div>
+            <input type="number" min="1" max="1000" id="sizeChange" style="width: 40px">
+        <span> Size   </span>
+        <button id="updateSize">Update</button>
+        </div>
+    </div>
+        
 
 
     <div class="paramChildBtn" id="physicsChild">
         <div>Physics Manipulation</div>
-        <input type="text" id="ugcChange" style="width: 50px">
+        <input type="number" min="-750" max="750"  id="ugcChange" style="width: 50px">
         <span>
             <button id="updateUGC">Update</button>
         </span>
         <div class="sliderContainer">
-            <input type="range" min="0" max="250" value="35" class="paramSlider" id="ugcSlider" oninput="slideUpdate(this.value)">
+            <input type="range" min="0" max="250" value="35" class="paramSlider" id="ugcSlider" oninput="slideUpdateUGC(this.value)">
         </div>
         <div>This will change the overall "strength" of gravity acting on the objects</div>
     </div>
 
 
+    <div class="paramChildBtn" id="timeChild">
+        <div>Time Dilation</div> 
+        <input type="number" id="timeChange" style="width: 50px">
+        <span>
+            <button id="updateTime">Update</button>
+        </span>   
+        <div class="sliderContainer">
+            <input type="range" min="-1" max="5" value="1" class="paramSlider" id="timeSlider" oninput="slideUpdateTime(this.value)">
+        </div>
+        <div>This affects the speed at which the simulation will run(note: too large values may display innacurate physics)</div>
+    </div>
 
-    <div class="paramChildBtn" id="objectTopChild"> </div>
-    <div class="paramChildBtn" id="objectBotChild"></div>
+
+
+
    <script src="script.js"></script>
    <script src="buttonEventHandling.js"></script>
 </body>
