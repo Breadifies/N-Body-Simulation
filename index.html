@@ -12,7 +12,7 @@
 <body>
     <canvas>
     </canvas>
-    <button class="paramBtn" id="objectTopBtn">ObjectTop</button> 
+    <button onclick="showBtnTopObj()" class="paramBtn" id="objectTopBtn">ObjectTop</button> 
 
     <button onclick="showBtnBotObj()" class="paramBtn" id="objectBotBtn">ObjectBottom</button> 
 
@@ -33,8 +33,15 @@
     <button class="zoom" id="zoomInBtn">-</button>
     <div id="objTypeLine"></div>
 
-    <div class="paramChildBtn" id="objectTopChild"> </div>
-
+    <div class="paramChildBtn" id="objectTopChild"> 
+        <div>Object Properties</div> <!--Use for creating toggle symbol--> 
+        <div>Toggle Trails</div>
+        <label class="switch">
+            <input type="checkbox">
+            <span class="slider round" id="trailToggle"></span>
+        </label>
+    </div>
+    
     <div class="paramChildBtn" id="objectBotChild">
         <div>Object Customization</div>
         <input type="number" min="1" max="1000" id="massChange" style="width: 100px">
