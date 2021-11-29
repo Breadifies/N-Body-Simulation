@@ -1,4 +1,5 @@
-  const canvas = document.querySelector("canvas"); //c stands for context
+
+const canvas = document.querySelector("canvas"); //c stands for context
 const c = canvas.getContext("2d");
 const width = (canvas.width = window.innerWidth);
 const height = (canvas.height = window.innerHeight);
@@ -23,8 +24,9 @@ let UGC = 35;
 const dt = 0.008; //measured in years
 const softeningConstant = 0.15;
 const scale = 70;
-const trailLimit = 10;
-const velocityDragMult = 35;
+let trailLimit = 0;
+let trailChange = 35;
+const velocityDragMult = 18;
 
 
 //nBodySimulation creates an isolated instance of an n body simulation
@@ -74,7 +76,7 @@ class nBodySimulation {
           const dy = otherBody.y - thisBody.y;
           //sum of the distances between the objects squared
           const distSq = dx * dx + dy * dy;
-          const force = (this.UGC * otherBody.m) / (distSq * Math.sqrt(distSq + this.softeningConstant));
+          const force = (this.UGC * otherBody.m) / (distSq * Math.sqrt(distSq + this.softeningConstant));//fun experiment, try puttng /distSq after this.softeningConstant
           //Law of gravitation for one body's force acting on another, softening constant exists to prevent error of infintesimaly small distances as the objects are treated as particles rather than objects with pass
           ax += dx * force;
           ay += dy * force;
@@ -105,9 +107,11 @@ class cObject { //class for construction of a cObject
 
   storeTrail(x, y){
     this.trailLine.push({x, y});//pushes x and y values into trailLine element, storing values of where the object was and currently is
-
     if (this.trailLine.length > trailLimit){
       this.trailLine.shift(); //shifts all elements in array to the right, deleting the oldest position of the cObject
+      if (trailLimit == 0){
+      this.trailLine.length = 0;
+      }
     }
   }
   drawTrail(x, y){//draws the actual trail using lines. Pre existing code used smaller fading circles but increasing tail length lagged the system much more. Lines allow for more ease of following trajectory and lessens load on device
@@ -120,6 +124,7 @@ class cObject { //class for construction of a cObject
       c.lineTo(this.trailLine[i-1].x, this.trailLine[i-1].y);//extends to point before
       c.strokeStyle = `rgb(${this.color})`;
       c.stroke();
+
     };
   }
 }
@@ -177,7 +182,10 @@ canvas.addEventListener("mouseup",
     const vy = -(e.clientY - mousePressY) / velocityDragMult;
     //negative to simulate slingshot-like input feedback
 
-    nBodyInstance.cBodies.push({m: dragMass, x, y, vx, vy, cobject: new cObject(c, Math.random() * 5, "255, 255, 255")});
+    nBodyInstance.cBodies.push({
+      m: dragMass, x, y, vx, vy, cobject: new cObject(c, dragSize, "255, 255, 255"),
+      m: dragMass, x, y, vx, vy, cobject: new cObject(c, dragSize, "255, 255, 255")
+    });
     dragging = false;
   //placeholder cBody which pushes a pre determined object into the simulation at the mouse's position.
     },
