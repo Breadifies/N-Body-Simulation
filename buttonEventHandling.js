@@ -1,11 +1,32 @@
+///////////////////////////////////////////// OBJECT TOP
+////////////////////////////////////////////
+function showBtnTopObj() {//displays or removes the relevant div element using a button 
+  let x = document.querySelector("#objectTopChild");
+  if (x.style.display === "none") {//changes the CSS style of the block depending on what it is currently
+    x.style.display = "block";
+  }else{
+    x.style.display = "none";
+  }
+}
+
+document.querySelector("#trailToggle").addEventListener("click", function
+(){
+  if (trailLimit == 0){
+    trailLimit = trailChange;
+  }else if (trailLimit != 0){
+    trailLimit = 0; 
+  }
+});
+
+
 
 ///////////////////////////////////////////// OBJECT BOTTOM
 ////////////////////////////////////////////
 
 
-function showBtnBotObj() {//displays or removes the relevant div element using a button 
+function showBtnBotObj() {
   let x = document.querySelector("#objectBotChild");
-  if (x.style.display === "none") {//changes the CSS style of the block depending on what it is currently
+  if (x.style.display === "none") {
     x.style.display = "block";
   }else{
     x.style.display = "none";
@@ -13,11 +34,21 @@ function showBtnBotObj() {//displays or removes the relevant div element using a
 }
 document.querySelector("#massChange").value = 0.005;
 document.querySelector("#updateMass").addEventListener("click", function(){
+  if ((document.querySelector("#massChange").value) >= 100){
+    document.querySelector("#massChange").value = 100;
+  }else if ((document.querySelector("#massChange").value) <= 0){
+    document.querySelector("#massChange").value = 0;
+  }
   dragMass = document.querySelector("#massChange").value;
 });
 
 document.querySelector("#sizeChange").value = 5;
 document.querySelector("#updateSize").addEventListener("click", function(){
+  if ((document.querySelector("#sizeChange").value) >= 100){
+    document.querySelector("#sizeChange").value = 100;
+  }else if ((document.querySelector("#sizeChange").value) <= 0.05){
+    document.querySelector("#sizeChange").value = 0.05;
+  }
   dragSize = document.querySelector("#sizeChange").value;
 });
 
@@ -26,10 +57,10 @@ document.querySelector("#updateSize").addEventListener("click", function(){
 
 
 function showBtnPhysics() {//displays or removes the relevant div element using a button 
-    let x = document.querySelector("#physicsChild");
-    if (x.style.display === "none") {//changes the CSS style of the block depending on what it is currently
-      x.style.display = "block";
-    }else{
+  let x = document.querySelector("#physicsChild");
+  if (x.style.display === "none") {//changes the CSS style of the block depending on what it is currently
+     x.style.display = "block";
+  }else{
       x.style.display = "none";
     }
   }
