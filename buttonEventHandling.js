@@ -18,6 +18,13 @@ document.querySelector("#trailToggle").addEventListener("click", function
   }
 });
 
+document.querySelector("#collisionToggle").addEventListener("click", function(){
+  if (collisionMode == false){
+    collisionMode = true;
+  }else{
+    collisionMode = false;
+  }
+});
 
 
 ///////////////////////////////////////////// OBJECT BOTTOM
@@ -37,7 +44,7 @@ document.querySelector("#updateMass").addEventListener("click", function(){
   if ((document.querySelector("#massChange").value) >= 100){
     document.querySelector("#massChange").value = 100;
   }else if ((document.querySelector("#massChange").value) <= 0){
-    document.querySelector("#massChange").value = 0;
+    document.querySelector("#massChange").value = 1;
   }
   dragMass = document.querySelector("#massChange").value;
 });
