@@ -14,9 +14,9 @@ window.addEventListener("resize", function(){ //function to resize canvas when y
 const cBodies = [
 {m: 1.66e-7,x: -0.346,y: -0.272,vx: 4.251,vy: -7.62,radius: 5,color:"0, 12, 153",}, //mercury
 {m: 2.45e-6,x: -0.168,y: 0.698,vx: 7.21,vy: 1.77,radius: 5.8,color:"100, 240, 150",}, //venus
-{m: 3e-6,x: 0.649,y: 0.748,vx: -4.85,vy: 4.97,radius: 6.2,color:"210, 200, 24",}, //earth
+{m: 3e-6,x: -0.479,y: 0.867,vx: -5.62,vy: -3.032,radius: 6.2,color:"210, 200, 24",}, //earth
 {m: 3.2e-7,x: -0.57,y: -1.39,vx: 4.92,vy: -1.51,radius: 6.25,color:"230, 80, 40",}, //mars
-{m: 9.54e-4,x: 4.41,y: -2.35,vx: 1.263,vy: 2.56,radius: 12,color:"200, 150, 20",}, //jupiter
+{m: 9.54e-4,x: 4.41,y: -2.35,vx: 1.263,vy: 2.56,radius: 12,color:"200, 110, 200",}, //jupiter
 {m: 1, x: 0, y: 0, vx: 0, vy: 0, radius: 20, color:"249, 215, 28",} //sun
 ]
 
@@ -25,8 +25,16 @@ const dt = 0.008; //measured in years
 const softeningConstant = 0.15;
 const scale = 70;
 let trailLimit = 0;
-let trailChange = 35;
+let trailChange = 30;
 const velocityDragMult = 18;
+let collisionMode = false;
+
+
+function getDistance(x1, y1, x2, y2) { //calculates distance between two points, more accurate than acceleration calculation
+  let xDistance = x2 - x1;
+  let yDistance = y2 - y1;
+  return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+}
 
 
 //nBodySimulation creates an isolated instance of an n body simulation
@@ -74,21 +82,33 @@ class nBodySimulation {
           const otherBody = this.cBodies[j];
           const dx = otherBody.x - thisBody.x;
           const dy = otherBody.y - thisBody.y;
-          //sum of the distances between the objects squared
-          const distSq = dx * dx + dy * dy;
-          const force = (this.UGC * otherBody.m) / (distSq * Math.sqrt(distSq + this.softeningConstant));//fun experiment, try puttng /distSq after this.softeningConstant
+          let distSq = dx * dx + dy * dy;
+          let force = (this.UGC * otherBody.m) / (distSq * Math.sqrt(distSq + this.softeningConstant));//fun experiment, try puttng /distSq after this.softeningConstant
           //Law of gravitation for one body's force acting on another, softening constant exists to prevent error of infintesimaly small distances as the objects are treated as particles rather than objects with pass
           ax += dx * force;
           ay += dy * force;
+          if (collisionMode == true){
+            let thisX = thisBody.x*scale + width/2;
+            let thisY = thisBody.y*scale + width/2;
+            let otherX = otherBody.x*scale + width/2;
+            let otherY = otherBody.y*scale + width/2;
+            let distCalc = getDistance(thisX, thisY, otherX, otherY);
+            if (distCalc < thisBody.cobject.radius + otherBody.cobject.radius){
+              thisBody.cobject.color = 
+              Math.floor((Math.random()*255)+1)+", "+Math.floor((Math.random()*255)+1)+", "+Math.floor((Math.random()*255)+1);
+              }
+            }
           }
         }
       thisBody.ax = ax;
       thisBody.ay = ay;
+      
       }
     return this;
     }
-
   }
+
+
 
 class cObject { //class for construction of a cObject 
   constructor(c, radius, color) {
@@ -196,19 +216,21 @@ canvas.addEventListener("mouseup",
 //MOUSE INTERACTION
 
 
+
+
+
 //animates and iteratively draws the objects visually on the canvas
   const animate = function(){
     nBodyInstance.updatePos().updateAccel().updateVel();//Accel update runs before Velocity
     c.clearRect(0, 0, width, height);  //clears the canvas screen of any objects (to input new positions of objects)
     const cBodiesLen = nBodyInstance.cBodies.length;
-    for (let i = 0; i < cBodiesLen; i++) {
+    for (let i = 0; i < cBodiesLen; i++){
       const thisBody = nBodyInstance.cBodies[i];
       //centers the position of the bodies relative to the canvas screen
       const x = width / 2 + thisBody.x * scale;
       const y = height / 2 + thisBody.y * scale;
       thisBody.cobject.drawObj(x, y);
-      thisBody.cobject.drawTrail(x, y);
-
+      thisBody.cobject.drawTrail(x, y);  
     }
     if (dragging){
       c.beginPath();
