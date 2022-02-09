@@ -13,20 +13,14 @@
     <canvas>
     </canvas>
     <button onclick="showBtnTopObj()" class="paramBtn" id="objectTopBtn">ObjectTop</button> 
-
     <button onclick="showBtnBotObj()" class="paramBtn" id="objectBotBtn">ObjectBottom</button> 
-
     <button onclick="showBtnPhysics()"class="paramBtn" id="physicsBtn">Physics</button> 
-    
     <button onclick="showBtnTime()" class="paramBtn" id="timeBtn">Time Dilation</button> 
-
     <button onclick="clearSim()" class="paramBtn" id="clearBtn">Clear Simulation</button>
-
-
-
-    <button class="objType" id="planetBtn">PlanetBdy</button>
-    <button class="objType" id="sunBtn">SolarBdy</button>
-    <button class="objType" id="temp1Btn">temp1</button>
+    <button onclick="planetBdy()" class="objType" id="planetBtn">PlanetBdy</button>
+    <button onclick="solarBdy()" class="objType" id="starBtn">SolarBdy</button>
+    <button onclick ="asteroidBdy()" class="objType" id="asteroidBtn">AsteroidBdy</button>
+    
     <button class="objType" id="temp2Btn">temp2</button>
     <button class="objType" id="temp3Btn">temp3</button>
     <button class="zoom" id="zoomOutBtn">+</button>
@@ -47,6 +41,7 @@
         </label>
     </div>
     
+
     <div class="paramChildBtn" id="objectBotChild">
         <div>Object Customization</div>
         <input type="number" min="1" max="1000" id="massChange" style="width: 100px">
@@ -58,6 +53,8 @@
         <span> Size   </span>
         <button id="updateSize">Update</button>
         </div>
+        <label>Pick Colour</label><!--creates a HTML colour picker-->
+        <input type="color" id="colorPicker" value= "#000000">
     </div>
         
 
@@ -94,4 +91,3 @@
    <script src="buttonEventHandling.js"></script>
 </body>
 </html>
-
