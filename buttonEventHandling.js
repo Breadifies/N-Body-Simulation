@@ -46,7 +46,7 @@ document.querySelector("#updateMass").addEventListener("click", function(){
   }else if ((document.querySelector("#massChange").value) <= 0){
     document.querySelector("#massChange").value = 1;
   }
-  dragMass = document.querySelector("#massChange").value;
+  dragMass = parseInt(document.querySelector("#massChange").value);
 });
 
 document.querySelector("#sizeChange").value = 5;
@@ -58,6 +58,23 @@ document.querySelector("#updateSize").addEventListener("click", function(){
   }
   dragSize = document.querySelector("#sizeChange").value;
 });
+
+document.querySelector("#colorPicker").value = "#ffffff";
+document.querySelector("#colorPicker").addEventListener('input', function() {
+  console.log(hexToRgb(document.querySelector("#colorPicker").value.substring(1, 7)));
+  dragColor = hexToRgb(document.querySelector("#colorPicker").value.substring(1, 7));
+});
+
+function hexToRgb(hex) {
+  var arrBuff = new ArrayBuffer(4);
+  var vw = new DataView(arrBuff);
+  vw.setUint32(0,parseInt(hex, 16),false);
+  var arrByte = new Uint8Array(arrBuff);
+  return arrByte[1] + "," + arrByte[2] + "," + arrByte[3];
+}
+console.log(hexToRgb("444444"));
+
+
 
 ///////////////////////////////////////////// PHYSICS MANIPULATION
 ////////////////////////////////////////////
@@ -122,5 +139,84 @@ function clearSim() {
   //clears array instance by assigning it an empty array
 }
 
+///////////////////////////////////////// PRESET CELESTIAL OBJECTS
 /////////////////////////////////////////
-/////////////////////////////////////////
+
+presetMass = 0;
+presetSize = 0;
+presetColor = 0;
+
+let presetSelect = false;
+let planetBodyCheck = false;
+let solarBodyCheck = false;
+let asteroidBodyCheck = false;
+
+function presetReset(){
+  planetBodyCheck = false;
+  solarBodyCheck = false;
+  asteroidBodyCheck = false;
+}
+
+//what the HTML button calls upon being clicked
+function planetBdy() {
+  if (planetBodyCheck == false && presetSelect == false){//if no body has been selected and this body specifically hasnt been clicked
+    presetReset();
+    planetBodyCheck = true;
+    presetSelect = true;
+  }else if (planetBodyCheck == false && presetSelect == true){// if a body has been selected but not this one
+    presetReset();
+    planetBodyCheck = true;
+  }else if (planetBodyCheck == true && presetSelect == true){// if this body has been selected and it has been clicked once
+    presetReset();
+    presetSelect = false;
+  }   
+}
+
+function solarBdy() {//same function purpose as planetBdy() for differnet preset
+  if (solarBodyCheck == false && presetSelect == false){
+    presetReset();
+    solarBodyCheck = true;
+    presetSelect = true;
+  }else if (solarBodyCheck == false && presetSelect == true){
+    presetReset();
+    solarBodyCheck = true;
+  }else if (solarBodyCheck == true && presetSelect == true){
+    presetReset();
+    presetSelect = false;
+  }   
+}
+
+function asteroidBdy() {//similar to planetBdy()
+  if (asteroidBodyCheck == false && presetSelect == false){
+    presetReset();
+    asteroidBodyCheck = true;
+    presetSelect = true;
+  }else if (asteroidBodyCheck == false && presetSelect == true){
+    presetReset();
+    asteroidBodyCheck = true;
+  }else if (asteroidBodyCheck == true && presetSelect == true){
+    presetReset();
+    presetSelect = false;
+  }   
+}
+
+//function to input which preset to choose depending on which ubutton pressed
+function setPreset(){
+  if (planetBodyCheck == true){ //planet preset
+    presetMass = 3e-6;
+    presetSize = 5.1;
+    presetColor = "100,100,100";
+  }else if (solarBodyCheck == true){ //sun preset
+    presetMass = 1;
+    presetSize = 18;
+    presetColor = "249,215,28";
+  }else if (asteroidBodyCheck == true){ //asteroid preset
+    presetMass = 3.318e-20;
+    presetSize = Math.random() * (2 - 0.05) + 0.05; //random value between 2 and 0.05 to determine radius
+    presetColor = "180,210,205";
+  }
+}
+
+
+
+
