@@ -52,6 +52,7 @@ body {
     height: 110px;
     top: 179px;
 }
+
 .switch {
     position: relative;
     display: inline-block;/*like inlineblock but width and height can be set */
@@ -135,10 +136,10 @@ input:checked + .slider:before {
 #planetBtn {
     right: 500px;
 }
-#sunBtn {
+#starBtn {
     right: 400px;
 }
-#temp1Btn {
+#asteroidBtn {
     right: 300px;
 }
 #temp2Btn {
