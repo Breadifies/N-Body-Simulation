@@ -1,14 +1,14 @@
-
 const canvas = document.querySelector("canvas"); //c stands for context
 const c = canvas.getContext("2d");
-const width = (canvas.width = window.innerWidth);
-const height = (canvas.height = window.innerHeight);
-
+let width = (canvas.width = window.innerWidth);
+let height = (canvas.height = window.innerHeight);
 window.addEventListener("resize", function(){ //function to resize canvas when you resize window
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+  width = canvas.width; //resizes the width and heights of the canvas whenever that changes
+  height = canvas.height;
+  
 })
-
 
 //a scale reference is made when basing upon what the values of the cObjects should be, in this scenarion, m is equal to 1 solar mass
 const cBodies = [
@@ -18,12 +18,15 @@ const cBodies = [
 {m: 3.2e-7,x: -0.57,y: -1.39,vx: 4.92,vy: -1.51,radius: 6.25,color:"230,  80,  40",}, //mars
 {m: 9.54e-4,x: 4.41,y: -2.35,vx: 1.263,vy: 2.56,radius: 12,color:"200, 110, 200",}, //jupiter
 {m: 1, x: 0, y: 0, vx: 0, vy: 0, radius: 20, color:"249, 215, 28",} //sun
+// { m:1, x:0, y:0, vx:-4.82, vy:4.82, radius: 7, color:"255, 0, 0",}, //3 body pseudo stable orbit (figure 8)
+// { m:1, x:1.5, y:0, vx:2.41, vy:-2.41, radius: 7, color: "0, 255, 0",},
+// { m:1, x:-1.5, y:0, vx:2.41, vy:-2.41, radius: 7, color: "0, 0, 255",}
 ]
 
-let UGC = 35;
-const dt = 0.008; //measured in years
+let UGC = 39.5; // universal gravitational constant 39.5
+const dt = 0.008; //measured in years 0.008
 const softeningConstant = 0.15;
-const scale = 70;
+const scale = 70;//scale 70
 let trailLimit = 0;
 let trailChange = 30;
 const velocityDragMult = 18;
@@ -88,8 +91,8 @@ class nBodySimulation {
       const thisBody = this.cBodies[i];
       //nested for loop checks 1 object against all other objects then repeats for every other object
       for (let j = 0; j < cBodiesLen; j++) {
-        if (i !== j && this.cBodies[j] !== "empty" && this.cBodies[i] !== "empty") { //more concise than (thisBody != otherBody) prevents checking the same object against itself
-          const otherBody = this.cBodies[j];
+        const otherBody = this.cBodies[j];
+        if (i !== j && this.cBodies[j] !== "empty" && this.cBodies[i] !== "empty" && thisBody.x != otherBody.x) { //more concise than (thisBody != otherBody) prevents checking the same object against itself
           if (collisionMode == true){
             let thisX = thisBody.x*scale + width/2;
             let thisY = thisBody.y*scale + width/2;
@@ -98,8 +101,6 @@ class nBodySimulation {
             let distCalc = getDistance(thisX, thisY, otherX, otherY);
             if (distCalc < thisBody.cobject.radius + otherBody.cobject.radius){
               if (thisBody.m >= otherBody.m){
-                console.log(thisBody.m);
-                console.log(otherBody.m);
                 thisBody.m += otherBody.m;
                 this.cBodies[j] = "empty";
                 }
@@ -188,14 +189,14 @@ let dragging = false;
 
 canvas.addEventListener("mousedown", 
  function(e) {
+    console.log(mousePressX);
     mousePressX = e.clientX; //taken directly frrom the window's data on the relative mouse parameters for x and y values 
     mousePressY = e.clientY;
     dragging = true;//mousedown vs mouseup discerns the positions and distances that are calculated
   },
   false
 );
-
-canvas.addEventListener("mousemove", 
+canvas.addEventListener("mousemove",
   function(e) {
     currentMouseX = e.clientX;
     currentMouseY = e.clientY;
@@ -225,7 +226,6 @@ canvas.addEventListener("mouseup",
       dMass = presetMass;
       dSize = presetSize;
       dColor = presetColor;
-      console.log(dSize);
     }else{
       dMass = dragMass;
       dSize = dragSize;
