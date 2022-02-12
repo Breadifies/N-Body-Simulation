@@ -2,7 +2,7 @@
 ////////////////////////////////////////////
 function showBtnTopObj() {//displays or removes the relevant div element using a button 
   let x = document.querySelector("#objectTopChild");
-  if (x.style.display === "none") {//changes the CSS style of the block depending on what it is currently
+  if (getComputedStyle(x).display === "none") {//changes the CSS style of the block depending on what it is currently
     x.style.display = "block";
   }else{
     x.style.display = "none";
@@ -31,9 +31,9 @@ document.querySelector("#collisionToggle").addEventListener("click", function(){
 ////////////////////////////////////////////
 
 
-function showBtnBotObj() {
+function showBtnBotObj() {//event handling for oopening the popup div element
   let x = document.querySelector("#objectBotChild");
-  if (x.style.display === "none") {
+  if (getComputedStyle(x).display === "none") {
     x.style.display = "block";
   }else{
     x.style.display = "none";
@@ -61,18 +61,16 @@ document.querySelector("#updateSize").addEventListener("click", function(){
 
 document.querySelector("#colorPicker").value = "#ffffff";
 document.querySelector("#colorPicker").addEventListener('input', function() {
-  console.log(hexToRgb(document.querySelector("#colorPicker").value.substring(1, 7)));
   dragColor = hexToRgb(document.querySelector("#colorPicker").value.substring(1, 7));
 });
 
-function hexToRgb(hex) {
+function hexToRgb(hex) { //converts hex to rgb
   var arrBuff = new ArrayBuffer(4);
-  var vw = new DataView(arrBuff);
-  vw.setUint32(0,parseInt(hex, 16),false);
+  var vw = new DataView(arrBuff); //allows for reading and writing of multiple values to the array Buffer
+  vw.setUint32(0,parseInt(hex, 16),false); //stores integer as 32 bit, using parseInt to convert hex to decimal
   var arrByte = new Uint8Array(arrBuff);
-  return arrByte[1] + "," + arrByte[2] + "," + arrByte[3];
+  return arrByte[1] + "," + arrByte[2] + "," + arrByte[3]; //concatenation
 }
-console.log(hexToRgb("444444"));
 
 
 
@@ -82,7 +80,7 @@ console.log(hexToRgb("444444"));
 
 function showBtnPhysics() {//displays or removes the relevant div element using a button 
   let x = document.querySelector("#physicsChild");
-  if (x.style.display === "none") {//changes the CSS style of the block depending on what it is currently
+  if (getComputedStyle(x).display === "none") {//changes the CSS style of the block depending on what it is currently
      x.style.display = "block";
   }else{
       x.style.display = "none";
@@ -110,7 +108,7 @@ function slideUpdateUGC(value) { //updates textbox value based on slider value
 
 function showBtnTime() {
   let x = document.querySelector("#timeChild");
-  if (x.style.display ==="none") {
+  if (getComputedStyle(x).display ==="none") {
     x.style.display = "block";
   }else{
     x.style.display = "none";
@@ -138,6 +136,8 @@ function clearSim() {
   nBodyInstance.cBodies = []; 
   //clears array instance by assigning it an empty array
 }
+
+
 
 ///////////////////////////////////////// PRESET CELESTIAL OBJECTS
 /////////////////////////////////////////
