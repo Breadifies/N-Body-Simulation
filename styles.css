@@ -1,11 +1,27 @@
+/*removal of arrows that appear on the right side of textbox type="number*/
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 canvas {
     border: 1px solid black;
     background: rgb(1, 2, 5);
 }
 
+
 body {
-    margin: 0; /*overrides preset borwser property so there is no margin for the container*/
+margin: 0; /*overrides preset browser property so there is no margin for the container*/
     overflow: hidden; /*prevents use of scrollbar*/
+    -webkit-user-select: none; /* prevents highlighting of text on different browsers */
+    -ms-user-select: none; 
+    user-select: none;
 }
 
 
@@ -37,8 +53,8 @@ body {
 /*parameter child popups*/
 .paramChildBtn{
     position: absolute;
-    background-color: rgba(44, 47, 51, 0.8);
     display: none;
+    background-color: rgba(44, 47, 51, 0.8);
     border: 5px solid rgb(26, 26, 163, 0.8);
     border-radius: 5px;
     right: 110px;
@@ -157,9 +173,9 @@ input:checked + .slider:before {
     width: 50px;
     height: 50px;
 }
-#zoomOutBtn {
+#zoomInBtn {
     top: 620px;
 }
-#zoomInBtn {
+#zoomOutBtn {
     top: 675px;
 }
