@@ -224,10 +224,10 @@ canvas.addEventListener("mousemove",
 //////////////MOUSE OBJECT VARIABLES
 //////////////
 
-let dMass = 0.005; //d is used for the actual value that is passed into the instantiation
+let dMass = 0.00001; //d is used for the actual value that is passed into the instantiation
 let dSize = 5;
 let dColor = "255, 255, 255";
-let dragMass = 0.005; //drag is the value chosen via manual input using the parameters which d will take in provided checks for presets have been done
+let dragMass = 0.00001; //drag is the value chosen via manual input using the parameters which d will take in provided checks for presets have been done
 let dragSize = 5;
 let dragColor = "255, 255, 255";
 
