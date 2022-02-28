@@ -8,7 +8,7 @@
     <style>@import url('https://fonts.googleapis.com/css2?family=Alegreya&display=swap'); @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@700&display=swap');
 </style>
-   
+    <!--importing fonts externally using google fonts-->
     <title>Document</title>
 </head>
 
@@ -50,7 +50,7 @@
 
     <div class="paramChildBtn" id="objectBotChild">
         <h2>OBJECT CUSTOMISATION</h2>
-        <input type="number" min="1" max="1000" id="massChange" style="width: 100px">
+        <input type="number" min="1" max="1000" id="massChange" style="width: 100px"> <!--textbox value inputs-->
         <span> Mass </span>
         <button class="updateBtn"id="updateMass" >Update</button>
         <span >Where a value of 1 is equal to one Solar Mass</span>
@@ -66,14 +66,14 @@
 
     <div class="paramChildBtn" id="physicsChild">
         <h2>PHYSICS MANIPULATION</h2>
-        <input type="number" min="-750" max="750"  id="ugcChange" style="width: 50px">
+        <input type="number" min="-20" max="20"  id="ugcChange" style="width: 50px">
         <span>
             <button class="updateBtn" id="updateUGC">Update</button>
         </span>
-        <div class="sliderContainer">
-            <input type="range" min="0" max="250" value="35" class="paramSlider" id="ugcSlider" oninput="slideUpdateUGC(this.value)">
+        <div class="sliderContainer"> <!--slider creator for selecting values-->
+            <input type="range" min="0" max="15" value="1" class="paramSlider" id="ugcSlider" oninput="slideUpdateUGC(this.value)">
         </div>
-        <span>This will change the overall "strength" of gravity acting on the objects</span>
+        <span>This will change the overall "strength" of gravity acting on the objects (multiplier)</span>
     </div>
 
 
@@ -94,7 +94,7 @@
     <div class="infoBox" id="planetBdyBox">
         <button onclick="this.parentElement.style.display = 'none';" class="infoBoxQuit">X</button> <!-- When this button is clicked, its parent element will dispappear (style set to none)-->
         <h1 style="display: inline;">Planetary Bodies</h1>
-        <div class="hoverMe">HOVER OVER ME!</div>
+        <div class="hoverMe">HOVER OVER ME!</div> <!-- <a> reference to a certain link when clicked, target=_blank to redirect to a new window-->
         <p class="boxPara">The earth is around 10^6 times lighter than our sun. Terrestial planets orbiting stars similar to ours have relatively similar radius' and masses,</p> <a href="https://en.wikipedia.org/wiki/Exoplanet" target="_blank" > usually only off up to a magnitude of 10</a> 
     </div>
 
@@ -158,7 +158,7 @@
         </p>
     </div>
 
-    <button onclick="disablePopups()" class="infoToggle" id="disableInfoBox">POPUPS ON</button>
+    <button onclick="disablePopups()" class="infoToggle" id="disableInfoBox">POPUPS ON</button> 
 
 
 

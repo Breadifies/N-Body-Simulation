@@ -10,7 +10,7 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-canvas {
+canvas { /*canvas styling where animation is done on*/
     border: 1px solid black;
     background: rgb(2, 4, 7);
 }
@@ -323,7 +323,7 @@ input:checked + .slider:before {
 
 /*disabling popup button*/
 .infoToggle {
-    font-family:'Catamaran', sans-serif;
+    font-family:'Catamaran', sans-serif; /*importing fonts externally*/
     color: rgb(0, 0, 0);
     position: absolute;
     width: 64px;

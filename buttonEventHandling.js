@@ -11,7 +11,7 @@ function showBtnTopObj() {//displays or removes the relevant div element using a
 
 document.querySelector("#trailToggle").addEventListener("click", function
 (){
-  if (trailLimit == 0){
+  if (trailLimit == 0){ //sets trail length to zero when toggled off with selection statement
     trailLimit = trailChange;
   }else if (trailLimit != 0){
     trailLimit = 0; 
@@ -19,7 +19,7 @@ document.querySelector("#trailToggle").addEventListener("click", function
 });
 
 document.querySelector("#collisionToggle").addEventListener("click", function(){
-  if (collisionMode == false){
+  if (collisionMode == false){//changes state of collision toggle variable
     collisionMode = true;
   }else{
     collisionMode = false;
@@ -31,26 +31,26 @@ document.querySelector("#collisionToggle").addEventListener("click", function(){
 ////////////////////////////////////////////
 
 
-function showBtnBotObj() {//event handling for oopening the popup div element
+function showBtnBotObj() {//event handling for opening the popup div element
   let x = document.querySelector("#objectBotChild");
-  if (getComputedStyle(x).display === "none") {
+  if (getComputedStyle(x).display === "none") { //computedstyle to take the css from another file and not inline
     x.style.display = "block";
   }else{
     x.style.display = "none";
   }
 }
-document.querySelector("#massChange").value = 0.005;
+document.querySelector("#massChange").value = 0.00001; //setting values and establishing validation for mass values
 document.querySelector("#updateMass").addEventListener("click", function(){
   if ((document.querySelector("#massChange").value) >= 100){
     document.querySelector("#massChange").value = 100;
   }else if ((document.querySelector("#massChange").value) <= 0){
     document.querySelector("#massChange").value = 1;
   }
-  dragMass = parseInt(document.querySelector("#massChange").value);
+  dragMass = parseFloat(document.querySelector("#massChange").value);
 });
 
 document.querySelector("#sizeChange").value = 5;
-document.querySelector("#updateSize").addEventListener("click", function(){
+document.querySelector("#updateSize").addEventListener("click", function(){ //similar validation to massChange
   if ((document.querySelector("#sizeChange").value) >= 100){
     document.querySelector("#sizeChange").value = 100;
   }else if ((document.querySelector("#sizeChange").value) <= 0.05){
@@ -59,7 +59,7 @@ document.querySelector("#updateSize").addEventListener("click", function(){
   dragSize = document.querySelector("#sizeChange").value;
 });
 
-document.querySelector("#colorPicker").value = "#ffffff";
+document.querySelector("#colorPicker").value = "#ffffff"; //setting color picker and converting output into rgb values
 document.querySelector("#colorPicker").addEventListener('input', function() {
   dragColor = hexToRgb(document.querySelector("#colorPicker").value.substring(1, 7));
 });
@@ -86,15 +86,15 @@ function showBtnPhysics() {//displays or removes the relevant div element using 
       x.style.display = "none";
     }
   }
-document.querySelector("#ugcChange").value = nBodyInstance.UGC; //sets textbox value to that of default
+document.querySelector("#ugcChange").value = 1; //sets textbox value to that of default
 document.querySelector("#updateUGC").addEventListener("click",function() {
-  if ((document.querySelector("#ugcChange").value) >= 750){
-    document.querySelector("#ugcChange").value = 750;
-  }else if ((document.querySelector("#ugcChange").value) <= -750){
-    document.querySelector("#ugcChange").value = -750;
+  if ((document.querySelector("#ugcChange").value) >= 20){
+    document.querySelector("#ugcChange").value = 20;
+  }else if ((document.querySelector("#ugcChange").value) <= -20){
+    document.querySelector("#ugcChange").value = -20;
   }
   //validation check for in range
-  nBodyInstance.UGC = document.querySelector("#ugcChange").value;
+  nBodyInstance.UGC = document.querySelector("#ugcChange").value*39.5;
   //replaces the value of UGC with what is in the textbox
 });
 
@@ -106,7 +106,7 @@ function slideUpdateUGC(value) { //updates textbox value based on slider value
 /////////////////////////////////////////////// TIME DILATION
 //////////////////////////////////////////////
 
-function showBtnTime() {
+function showBtnTime() { //displays time dilation div
   let x = document.querySelector("#timeChild");
   if (getComputedStyle(x).display ==="none") {
     x.style.display = "block";
