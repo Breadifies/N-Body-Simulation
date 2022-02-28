@@ -1,5 +1,5 @@
-const canvas = document.querySelector("canvas"); //c stands for context
-const c = canvas.getContext("2d");
+let canvas = document.querySelector("canvas"); //c stands for context
+let c = canvas.getContext("2d");
 let width = (canvas.width = window.innerWidth);
 let height = (canvas.height = window.innerHeight);
 window.addEventListener("resize", function(){ //function to resize canvas when you resize window
@@ -10,6 +10,11 @@ window.addEventListener("resize", function(){ //function to resize canvas when y
   
 })
 
+drawgridLines = function() { //function to load gridlines onto the background of canvas
+  let img = document.getElementById("gridlinesImage");
+  c.drawImage(img, 0, -1.5, 1623, 1203);
+};
+
 //a scale reference is made when basing upon what the values of the cObjects should be, in this scenarion, m is equal to 1 solar mass
 const cBodies = [
 {m: 1.66e-7,x: -0.346,y: -0.272,vx: 4.251,vy: -7.62,radius: 5,color:"0  ,  12, 153",}, //mercury
@@ -18,9 +23,7 @@ const cBodies = [
 {m: 3.2e-7,x: -0.57,y: -1.39,vx: 4.92,vy: -1.51,radius: 6.25,color:"230,  80,  40",}, //mars
 {m: 9.54e-4,x: 4.41,y: -2.35,vx: 1.263,vy: 2.56,radius: 12,color:"200, 110, 200",}, //jupiter
 {m: 1, x: 0, y: 0, vx: 0, vy: 0, radius: 20, color:"249, 215, 28",} //sun
-// { m:1, x:0, y:0, vx:-4.82, vy:4.82, radius: 7, color:"255, 0, 0",}, //3 body pseudo stable orbit (figure 8)
-// { m:1, x:1.5, y:0, vx:2.41, vy:-2.41, radius: 7, color: "0, 255, 0",},
-// { m:1, x:-1.5, y:0, vx:2.41, vy:-2.41, radius: 7, color: "0, 0, 255",}
+
 ]
 
 let UGC = 39.5; // universal gravitational constant 39.5
@@ -92,7 +95,7 @@ class nBodySimulation {
       //nested for loop checks 1 object against all other objects then repeats for every other object
       for (let j = 0; j < cBodiesLen; j++) {
         const otherBody = this.cBodies[j];
-        if (i !== j && this.cBodies[j] !== "empty" && this.cBodies[i] !== "empty" && thisBody.x != otherBody.x) { //more concise than (thisBody != otherBody) prevents checking the same object against itself
+        if (i !== j && this.cBodies[j] !== "empty" && this.cBodies[i] !== "empty" && thisBody.x != otherBody.x && thisBody.y != otherBody.y) { //more concise than (thisBody != otherBody) prevents checking the same object against itself
           if (collisionMode == true){
             let thisX = thisBody.x*scale + width/2;
             let thisY = thisBody.y*scale + width/2;
@@ -186,13 +189,23 @@ let mousePressY = 0;
 let currentMouseX = 0;
 let currentMouseY = 0;
 let dragging = false;
+let isMouseOver = 0; //determines whether mouse is hovering over canvas or not
+
+function onMouseOver(){ //linked to html event onmouseover
+  isMouseOver = 1; //yes
+}
+function onMouseOff(){ //linked to html event onmouseoff
+  isMouseOver = 0; //no
+}
 
 canvas.addEventListener("mousedown", 
  function(e) {
-    console.log(mousePressX);
     mousePressX = e.clientX; //taken directly frrom the window's data on the relative mouse parameters for x and y values 
     mousePressY = e.clientY;
     dragging = true;//mousedown vs mouseup discerns the positions and distances that are calculated
+    if (isMouseOver == 0){
+      dragging = false;
+    }
   },
   false
 );
@@ -200,9 +213,13 @@ canvas.addEventListener("mousemove",
   function(e) {
     currentMouseX = e.clientX;
     currentMouseY = e.clientY;
+    if (isMouseOver == 0){
+      dragging = false;
+    }
   },
   false
 );
+
 
 //////////////MOUSE OBJECT VARIABLES
 //////////////
@@ -214,6 +231,7 @@ let dragMass = 0.005; //drag is the value chosen via manual input using the para
 let dragSize = 5;
 let dragColor = "255, 255, 255";
 
+
 canvas.addEventListener("mouseup",
   function(e) {
     let x = (mousePressX - width / 2) / scale;
@@ -223,8 +241,8 @@ canvas.addEventListener("mouseup",
     //negative to simulate slingshot-like input feedback
     if (presetSelect == true){
       setPreset();
-      dMass = presetMass;
-      dSize = presetSize;
+      dMass = presetMass; //preset variables specific to manual value alterations
+      dSize = presetSize; //dValues are what actually get passed into
       dColor = presetColor;
     }else{
       dMass = dragMass;
@@ -257,7 +275,7 @@ canvas.addEventListener("mouseup",
 
     dragging = false;
   //placeholder cBody which pushes a pre determined object into the simulation at the mouse's position.
-    },
+},
     false
   );
 
@@ -265,13 +283,13 @@ canvas.addEventListener("mouseup",
 //MOUSE INTERACTION
 
 
-
-
-
 //animates and iteratively draws the objects visually on the canvas
   const animate = function(){
     nBodyInstance.updatePos().updateAccel().updateVel();//Accel update runs before Velocity
     c.clearRect(0, 0, width, height);  //clears the canvas screen of any objects (to input new positions of objects)
+    c.globalAlpha=0.15;
+    drawgridLines(); //first draws the gridlines before the the objects, so is in the background of the simulation rather on top
+    c.globalAlpha=1;
     const cBodiesLen = nBodyInstance.cBodies.length;
     for (let i = 0; i < cBodiesLen; i++){
       if (nBodyInstance.cBodies[i] !== "empty"){
@@ -284,14 +302,18 @@ canvas.addEventListener("mouseup",
       }
     }
     if (dragging){
-      c.beginPath();
+      c.beginPath(); //creates red line to visualise drag strength and position
       c.moveTo(mousePressX, mousePressY);
       c.lineTo(currentMouseX, currentMouseY);
       c.strokeStyle = "red";
       c.stroke();
+      if (isMouseOver == false){ //cancels drag and red line if not on canvas
+      dragging = false;
+      }
     }
     requestAnimationFrame(animate);
-  };
-  
-animate();
 
+  };
+
+
+animate();

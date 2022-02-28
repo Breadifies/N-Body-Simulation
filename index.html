@@ -5,35 +5,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Alegreya&display=swap'); @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@700&display=swap');
+</style>
+   
     <title>Document</title>
 </head>
 
-<body>
-    <canvas>
+<body></body>
+<img id="gridlinesImage" src="Icons/gridlines.png" style="display: none;" /> 
+    <canvas id="thisCanvas" onmouseover="onMouseOver()" onmouseout="onMouseOff()"> <!--mouse checks to ensure canvas dragging only occurs whilst on canvas-->
     </canvas>
-    <button onclick="showBtnTopObj()" class="paramBtn" id="objectTopBtn">ObjectTop</button> 
-    <button onclick="showBtnBotObj()" class="paramBtn" id="objectBotBtn">ObjectBottom</button> 
-    <button onclick="showBtnPhysics()"class="paramBtn" id="physicsBtn">Physics</button> 
-    <button onclick="showBtnTime()" class="paramBtn" id="timeBtn">Time Dilation</button> 
-    <button onclick="clearSim()" class="paramBtn" id="clearBtn">Clear Simulation</button>
-    <button onclick="planetBdy()" class="objType" id="planetBtn">PlanetBdy</button>
-    <button onclick="solarBdy()" class="objType" id="starBtn">SolarBdy</button>
-    <button onclick="asteroidBdy()" class="objType" id="asteroidBtn">AsteroidBdy</button>
-    <button class="objType" id="temp2Btn">temp2</button>
-    <button class="objType" id="temp3Btn">temp3</button>
-
-    
+    <button onclick="showBtnTopObj()" class="paramBtn" id="objectTopBtn"></button> <!--buttons for each GUI element-->
+    <button onclick="showBtnBotObj()" class="paramBtn" id="objectBotBtn"></button> 
+    <button onclick="showBtnPhysics()" class="paramBtn" id="physicsBtn"></button> 
+    <button onclick="showBtnTime()" class="paramBtn" id="timeBtn"></button> 
+    <button onclick="clearSim()" class="paramBtn" id="clearBtn"></button>
+    <button onclick="planetBdy()" class="objType" id="planetBtn"></button>
+    <button onclick="solarBdy()" class="objType" id="solarBtn"></button>
+    <button onclick="asteroidBdy()" class="objType" id="asteroidBtn"></button>
+    <button onclick="blackHoleBdy()" class="objType" id="blackHoleBtn"></button>
+    <button onclick="showBtnScenario()" id="scenarioPresets"></button>
+    <button onclick="createSolar()" class="scenarioBtn" id="solarSysBtn"></button> <!-- Preset Scenario buttons-->
+    <button onclick="createBinary()" class="scenarioBtn" id="binarySysBtn"></button>
+    <button onclick="createUnstable()" class="scenarioBtn" id="unstableSysBtn"></button>
+    <button onclick="createLagrange()" class="scenarioBtn" id="lagrSysBtn"></button>
+    <button onclick="createEight()"class="scenarioBtn" id="eightSysBtn"></button>
     <div id="objTypeLine"></div>
 
-    <div class="paramChildBtn" id="objectTopChild"> 
-        <div>Object Properties</div> <!--Use for creating toggle symbol--> 
-        <div>Toggle Trails</div>
+    <div class="paramChildBtn" id="objectTopChild" style="margin-left: 5px;"> 
+        <h2>OBJECT PROPERTIES</h2> 
+        <h1 style="margin-top: 0px; margin-bottom: 0px;">Toggle Trails</h1>
         <label class="switch">
-            <input type="checkbox">
+            <input type="checkbox"><!--Use for creating toggle symbol--> 
             <span class="slider round" id="trailToggle"></span>
         </label>
-        <div>Toggle Collisions</div>
-        <label class="switch">
+        <h1 style="margin-left: 5px; margin-top: 0px; margin-bottom: 0px">Toggle Collisions</h1>
+        <label class="switch"> 
             <input type="checkbox">
             <span class="slider round" id="collisionToggle"></span>
         </label>
@@ -41,51 +49,136 @@
     
 
     <div class="paramChildBtn" id="objectBotChild">
-        <div>Object Customization</div>
+        <h2>OBJECT CUSTOMISATION</h2>
         <input type="number" min="1" max="1000" id="massChange" style="width: 100px">
         <span> Mass </span>
-        <button id="updateMass">Update</button>
-        Where a value of 1 is equal to one Solar Mass
+        <button class="updateBtn"id="updateMass" >Update</button>
+        <span >Where a value of 1 is equal to one Solar Mass</span>
         <div>
             <input type="number" min="1" max="1000" id="sizeChange" style="width: 40px">
         <span> Size   </span>
-        <button id="updateSize">Update</button>
+        <button class="updateBtn" id="updateSize">Update</button>
         </div>
-        <label>Pick Colour</label><!--creates a HTML colour picker-->
+        <span>Pick Colour</span><!--creates a HTML colour picker-->
         <input type="color" id="colorPicker" value= "#000000">
     </div>
         
 
-
     <div class="paramChildBtn" id="physicsChild">
-        <div>Physics Manipulation</div>
+        <h2>PHYSICS MANIPULATION</h2>
         <input type="number" min="-750" max="750"  id="ugcChange" style="width: 50px">
         <span>
-            <button id="updateUGC">Update</button>
+            <button class="updateBtn" id="updateUGC">Update</button>
         </span>
         <div class="sliderContainer">
             <input type="range" min="0" max="250" value="35" class="paramSlider" id="ugcSlider" oninput="slideUpdateUGC(this.value)">
         </div>
-        <div>This will change the overall "strength" of gravity acting on the objects</div>
+        <span>This will change the overall "strength" of gravity acting on the objects</span>
     </div>
 
 
     <div class="paramChildBtn" id="timeChild">
-        <div>Time Dilation</div> 
+        <h2>TIME DILATION</h2> 
         <input type="number" id="timeChange" style="width: 50px">
         <span>
-            <button id="updateTime">Update</button>
+            <button class="updateBtn" id="updateTime">Update</button>
         </span>   
         <div class="sliderContainer">
             <input type="range" min="-1" max="5" value="1" class="paramSlider" id="timeSlider" oninput="slideUpdateTime(this.value)">
         </div>
-        <div>This affects the speed at which the simulation will run(note: too large values may display innacurate physics)</div>
+        <span>Affects speed at which simulation will run (Note: Simulation speed is restricted by monitor refresh rate, greater values will have increasingly inaccurate results)</span>
     </div>
 
 
+    <!--infoBox html for each popup created from user interactions-->
+    <div class="infoBox" id="planetBdyBox">
+        <button onclick="this.parentElement.style.display = 'none';" class="infoBoxQuit">X</button> <!-- When this button is clicked, its parent element will dispappear (style set to none)-->
+        <h1 style="display: inline;">Planetary Bodies</h1>
+        <div class="hoverMe">HOVER OVER ME!</div>
+        <p class="boxPara">The earth is around 10^6 times lighter than our sun. Terrestial planets orbiting stars similar to ours have relatively similar radius' and masses,</p> <a href="https://en.wikipedia.org/wiki/Exoplanet" target="_blank" > usually only off up to a magnitude of 10</a> 
+    </div>
+
+    <div class="infoBox" id="solarBdyBox">
+        <button onclick="this.parentElement.style.display = 'none';" class="infoBoxQuit">X</button> 
+        <h1 style="display: inline;">Solar Bodies</h1>
+        <div class="hoverMe">HOVER OVER ME!</div>
+        <p class="boxPara">Our own sun boasts a size over a 100 times larger than the earth. Even then, Hypergiant </p> <a href="https://en.wikipedia.org/wiki/List_of_largest_known_stars" target="_blank" style="display: inline;">UY Scuti</a><p class="boxPara" style="display: inline; margin-left: 0px;">'s diameter is around 1700 times greater</p><p style="margin-left: 10px; margin-top: 0px;">than the sun's</p>
+    </div>
+
+    <div class="infoBox" id="asteroidBdyBox">
+        <button onclick="this.parentElement.style.display = 'none';" class="infoBoxQuit">X</button> 
+        <h1 style="display: inline;">Asteroids</h1>
+        <div class="hoverMe">HOVER OVER ME!</div>
+        <p class="boxPara">The asteroid belt consists of millions of asteroids orbiting the sun, separating Mars and Jupiter. Their sizes can range from a few metres to </p><a href="https://solarsystem.nasa.gov/asteroids-comets-and-meteors/asteroids/in-depth/" target="_blank">several hundred kilometers in diameter.</a>
+    </div>
+
+    <div class="infoBox" id="blackHoleBdyBox">
+        <button onclick="this.parentElement.style.display = 'none';" class="infoBoxQuit">X</button> 
+        <h1 style="display: inline;">Black Holes</h1>
+        <div class="hoverMe">HOVER OVER ME!</div>
+        <p class="boxPara"> Stellar black holes formed from dying stars can contain anywhere from 10 to 100 solar masses with a radius over 10^5 times smaller. Supermassive black holes like one at the centre of the Milky Way </p><a href="https://en.m.wikipedia.org/wiki/Supermassive_black_hole" target="_blank" style="display: in-line">can have masses of over a million suns</a>
+    </div>
+
+    <div class="infoBox" id="solarSysBox">
+        <button onclick="this.parentElement.style.display = 'none';" class="infoBoxQuit">X</button> 
+        <h1 style="display: inline;">Solar System</h1>
+        <div class="hoverMe">HOVER OVER ME!</div>
+        <p class="boxPara"> The solar system extending out to Jupiter. If being viewed from a standard computer the orbit of pluto (amongst other Trans-neptunian objects) would have an extra half metre radius extending</p><p class="boxPara" style="display: inline; margin-right: 0px">out of the screen, </p><a href="https://en.m.wikipedia.org/wiki/List_of_gravitationally_rounded_objects_of_the_Solar_System#Planets" target="_blank" style="display: in-line; margin-left: 0px;">    billions of kilometers away</a> 
+    </div>
+
+    <div class="infoBox" id="binarySysBox">
+        <button onclick="this.parentElement.style.display = 'none';" class="infoBoxQuit">X</button> 
+        <h1 style="display: inline; ">Binary Stars</h1>
+        <div class="hoverMe">HOVER OVER ME!</div>
+        <p class="boxPara" style="font-size:15.5px;">Gravitationally bound stars which orbit around a common centre of mass (barycentre), an example of a two body system. </p> <a href="https://www.youtube.com/watch?v=pIFiCLhJmig" target="_blank">Explore Binary Systems</a>
+    </div>
+
+    <div class="infoBox" id="unstableSysBox">
+        <button onclick="this.parentElement.style.display = 'none';" class="infoBoxQuit">X</button> 
+        <h1 style="display: inline;">Unstable Systems</h1> 
+        <div class="hoverMe">HOVER OVER ME!</div>
+        <p class="boxPara" style="font-size: 11px;">Whilst 2 body systems can be generalised with formula, 3 body and higher systems reliably cannot.</p><a href="https://www.youtube.com/watch?v=D89ngRr4uZg&list=PLBqEI6hPaKetzmXqlgfvFQRCcbZOPkWj4&index=22" target="_blank" style="display:inline; font-size: 11px; margin-right:0px; margin-top:0px;"> N body systems are notably very chaotic</a><p class="boxPara" style="display:inline; margin-left: 0px; font-size: 11px;">, and keeping a system</p><p class="boxPara" style="font-size: 11px; margin-top: 0px;"> relatively stable requires complete conservation of the variables within it. Try adding a planet or asteroids to this system and observe its effect on these objects with the mass of the sun</p>
+    </div>
+    <div class="infoBox" id="lagrSysBox">
+        <button onclick="this.parentElement.style.display = 'none';" class="infoBoxQuit">X</button> 
+        <h1 style="display: inline; margin-bottom:1px;">Periodic Orbits</h1>
+        <div class="hoverMe" style="margin-bottom: 1px;">HOVER OVER ME!</div>
+        <p class="boxPara" style="margin-top: 1px;font-size: 15px;">The n body problem (tackling the unpredictability of gravitationally affected bodies) cannot be summarised with exact equations, where such solutions can be found. In general </p>
+        <a href="https://www.youtube.com/watch?v=et7XvBenEo8" target="_blank" style="font-size: 15px; margin-bottom:0px; display:inline;">finding systems where objects have periodic motion</a>
+         <p class="boxPara" style="font-size: 15px; margin-top:none;">allow them to remain stable for a long time. In this case, the bodies’ being in equilibrium throughout their orbits allows them to theoretically indefinitely orbit each other, until errors in calculated approximations grow too large.</p>
+     </div>
+
+    <div class="infoBox" id="eightSysBox">
+        <button onclick="this.parentElement.style.display = 'none';" class="infoBoxQuit">X</button> 
+        <h1 style="display:inline; margin-bottom:1px;">Figure Eight</h1>
+        <div class="hoverMe" style="margin-bottom: 1px;">HOVER OVER ME!</div>
+        <p class="boxPara" style="font-size: 15px;">
+        Another example of a stable periodic 3 body system is one where the objects’ orbits resemble a figure eight symbol. This is a crude recreation of that system, obtained from brute force trial and error.  Excluding Euler and Lagrange, only recently in the late 20th century has</p><a href="http://three-body.ipb.ac.rs/" target="_blank" style="font-size: 15px; ">solutions</a> <p class="boxPara" style="display:inline; font-size: 15px; margin-left:0px;">to the 3 body problem been found.</p> 
+        <a href="https://www.youtube.com/watch?v=et7XvBenEo8" target="_blank" style="font-size:17px; display:inline;color: rgb(252, 81, 81)">Learn More</a>
+        </p>
+    </div>
+
+    <button onclick="disablePopups()" class="infoToggle" id="disableInfoBox">POPUPS ON</button>
 
 
-   <script src="script.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   <script src="script.js"></script> <!-- links the html to the relevant javascirpt files in the same folder-->
    <script src="buttonEventHandling.js"></script>
+   <script src="infoEventHandling.js"></script>
 </body>
 </html>
