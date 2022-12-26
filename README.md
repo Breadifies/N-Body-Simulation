@@ -1,2 +1,3 @@
 # ComputerScienceNEA-test
-test for hosting site temporarily
+https://breadifies.github.io/ComputerScienceNEA-test/
+Hosting my N - Body Physics Simulation Project!!
